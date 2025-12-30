@@ -62,7 +62,6 @@ function App() {
       setLoading(true);
       setIsPlaying(false);
       setVideoTime(0);
-      resetModuleStates();
       
       // Check if video exists
       const vidUrl = videoUrls[activeModule];
@@ -71,21 +70,24 @@ function App() {
       setVideoSrc(vidUrl);
       
       // Load mock detection data
+      let data: MockDetectionData;
       try {
         const response = await fetch(dataUrls[activeModule]);
         if (response.ok) {
-          const data: MockDetectionData = await response.json();
-          setMockData(data);
-          if (!videoExists && data.frames.length) {
-            setVideoDuration(Math.max(...data.frames.map(f => f.t)) + 0.5);
-          }
+          data = await response.json();
         } else {
           throw new Error('No data file');
         }
       } catch {
         // Use generated demo data
-        const data = generateDemoData(activeModule);
-        setMockData(data);
+        data = generateDemoData(activeModule);
+      }
+      
+      // Reset module states with thresholds from loaded data
+      resetModuleStates(data.thresholds as Record<string, number>);
+      setMockData(data);
+      
+      if (!videoExists && data.frames.length) {
         setVideoDuration(Math.max(...data.frames.map(f => f.t)) + 0.5);
       }
       
@@ -168,10 +170,10 @@ function generateDemoData(module: ModuleType): MockDetectionData {
       break;
       
     case 'throwing':
-      data.thresholds = { smoothing_window: 3, consecutive_threshold: 10 };
+      data.thresholds = { smoothing_window: 3, consecutive_threshold: 5, cooldown_seconds: 30 };
       for (let i = 0; i < frameCount; i++) {
         const t = i / fps;
-        const isThrowing = t > 3 && t < 7;
+        const isThrowing = t > 2 && t < 7;
         data.frames.push({
           t,
           detections: [{ track_id: 1, cls: isThrowing ? 'throwing' : 'normal', conf: 0.9, bbox: [280, 120, 360, 360] }],
@@ -180,7 +182,7 @@ function generateDemoData(module: ModuleType): MockDetectionData {
       break;
       
     case 'vehicle':
-      data.thresholds = { speed_threshold: 30, meters_per_pixel: 0.05, alert_cooldown: 30 };
+      data.thresholds = { speed_threshold_kmh: 30, meters_per_pixel: 0.05, alert_cooldown: 30 };
       data.homography_matrices = [[[1, 0, 0], [0, 1, 0], [0, 0, 1]]];
       for (let i = 0; i < frameCount; i++) {
         const t = i / fps;
@@ -193,26 +195,26 @@ function generateDemoData(module: ModuleType): MockDetectionData {
       break;
       
     case 'collision':
-      data.thresholds = { collision_distance: 100, collision_buffer: 5, collision_cooldown: 30 };
+      data.thresholds = { collision_distance_px: 120, collision_buffer_frames: 3, collision_cooldown_seconds: 20 };
       for (let i = 0; i < frameCount; i++) {
         const t = i / fps;
-        const humanX = 200;
-        const vehicleX = 450 - (t > 3 && t < 7 ? (t - 3) * 50 : 0);
+        const humanX = 250;
+        const vehicleX = 450 - (t > 2 && t < 6 ? (t - 2) * 40 : 0);
         data.frames.push({
           t,
           detections: [
             { track_id: 1, cls: 'person', conf: 0.95, bbox: [humanX - 25, 220, humanX + 25, 380], bottom_center: [humanX, 380] },
-            { track_id: 2, cls: 'car', conf: 0.92, bbox: [vehicleX - 45, 280, vehicleX + 45, 340], centroid: [vehicleX, 310] },
+            { track_id: 2, cls: 'forklift', conf: 0.92, bbox: [vehicleX - 45, 280, vehicleX + 45, 340], centroid: [vehicleX, 310] },
           ],
         });
       }
       break;
       
     case 'ppe':
-      data.thresholds = { ppe_persistence: 15, ppe_cooldown: 60 };
+      data.thresholds = { ppe_persistence_frames: 5, ppe_cooldown_seconds: 20 };
       for (let i = 0; i < frameCount; i++) {
         const t = i / fps;
-        const hasViolation = t > 2 && t < 8;
+        const hasViolation = t > 1 && t < 8;
         data.frames.push({
           t,
           detections: [{ track_id: 1, cls: 'person', conf: 0.95, bbox: [270, 80, 370, 380], missing: hasViolation ? ['helmet', 'vest'] : [] }],

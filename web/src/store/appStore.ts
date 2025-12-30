@@ -41,7 +41,7 @@ interface AppState {
   setPPEState: (state: PPEState) => void;
   senderState: SenderState;
   setSenderState: (state: Partial<SenderState>) => void;
-  resetModuleStates: () => void;
+  resetModuleStates: (thresholds?: Record<string, number>) => void;
   // Video availability
   videoAvailable: boolean;
   setVideoAvailable: (available: boolean) => void;
@@ -82,12 +82,29 @@ export const useAppStore = create<AppState>((set) => ({
   setPPEState: (state) => set({ ppeState: state }),
   senderState: { isRunning: false, lastSendTime: null, sentCount: 0, pendingCount: 0 },
   setSenderState: (newState) => set((state) => ({ senderState: { ...state.senderState, ...newState } })),
-  resetModuleStates: () => set({
-    intrusionState: initIntrusionState(),
-    throwingState: initThrowingState(),
-    vehicleState: { tracks: new Map(), speedThreshold: 30, alertCooldown: new Map() },
-    collisionState: initCollisionState(),
-    ppeState: initPPEState(),
+  resetModuleStates: (thresholds?: Record<string, number>) => set({
+    intrusionState: initIntrusionState(
+      thresholds?.buffer_size ?? 5,
+      thresholds?.threshold ?? 3
+    ),
+    throwingState: initThrowingState(
+      thresholds?.consecutive_threshold ?? 5,
+      thresholds?.smoothing_window ?? 3
+    ),
+    vehicleState: { 
+      tracks: new Map(), 
+      speedThreshold: thresholds?.speed_threshold_kmh ?? thresholds?.speed_threshold ?? 30, 
+      alertCooldown: new Map() 
+    },
+    collisionState: initCollisionState(
+      thresholds?.collision_buffer_frames ?? thresholds?.collision_buffer ?? 3,
+      thresholds?.collision_cooldown_seconds ?? thresholds?.collision_cooldown ?? 20,
+      thresholds?.collision_distance_px ?? thresholds?.collision_distance ?? 120
+    ),
+    ppeState: initPPEState(
+      thresholds?.ppe_persistence_frames ?? thresholds?.ppe_persistence ?? 5,
+      thresholds?.ppe_cooldown_seconds ?? thresholds?.ppe_cooldown ?? 20
+    ),
     timelineEvents: [],
     videoTime: 0,
   }),
