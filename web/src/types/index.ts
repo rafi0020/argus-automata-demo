@@ -33,6 +33,7 @@ export interface ThrowingDetection extends BaseDetection {
 export interface VehicleDetection extends BaseDetection {
   centroid: [number, number];
   plane_hint?: number;
+  speed_kmh?: number;
 }
 
 export interface PPEDetection extends BaseDetection {

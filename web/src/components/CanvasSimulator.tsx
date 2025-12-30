@@ -89,7 +89,7 @@ export const CanvasSimulator: React.FC = () => {
         const [x1, y1, x2, y2] = det.bbox;
         const w = x2 - x1, h = y2 - y1;
         const isPerson = det.cls === 'person' || det.cls === 'throwing' || det.cls === 'normal';
-        const isVehicle = ['car', 'truck', 'bus', 'motorcycle'].includes(det.cls);
+        const isVehicle = ['car', 'truck', 'bus', 'motorcycle', 'forklift'].includes(det.cls);
         let color = isPerson ? colors.person : isVehicle ? colors.vehicle : '#888';
         if (det.cls === 'throwing') color = '#ff6b35';
         if (det.missing && det.missing.length > 0) color = '#ff3366';

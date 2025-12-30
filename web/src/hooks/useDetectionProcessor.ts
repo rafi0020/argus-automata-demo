@@ -3,8 +3,11 @@ import { useAppStore } from '../store/appStore';
 import { insertAlert } from '../store/alertStore';
 import { pointInPolygon, distance } from '../parity/geometry';
 import { updateIntrusionBuffer, updateThrowingState, updateCollisionPair, updatePPETrack } from '../parity/buffers';
-import { initKalman2D, kalman2DUpdate, getSpeedFromKalman2D, pixelSpeedToKmh } from '../parity/kalman';
-import type { FrameData, Point, Alert, TimelineEvent, VehicleTrackState } from '../types';
+import { PositionKalman } from '../parity/kalman';
+import type { FrameData, Point, Alert, VehicleTrackState } from '../types';
+
+// Track Kalman filters for each vehicle
+const vehicleKalmans = new Map<number, PositionKalman>();
 
 export function useDetectionProcessor() {
   const {
@@ -65,39 +68,55 @@ export function useDetectionProcessor() {
         break;
       }
       case 'vehicle': {
-        const vehicles = frame.detections.filter(d => ['car', 'truck', 'bus', 'motorcycle'].includes(d.cls));
+        const vehicles = frame.detections.filter(d => ['car', 'truck', 'bus', 'motorcycle', 'forklift'].includes(d.cls));
         const fps = mockData?.fps || 25;
         const metersPerPixel = mockData?.thresholds?.meters_per_pixel || 0.05;
-        const speedThreshold = mockData?.thresholds?.speed_threshold || 30;
+        const speedThreshold = mockData?.thresholds?.speed_threshold_kmh || mockData?.thresholds?.speed_threshold || 30;
         const newTracks = new Map(vehicleState.tracks);
         
         for (const v of vehicles) {
           if (!v.centroid) continue;
-          const centroid: Point = { x: v.centroid[0], y: v.centroid[1] };
-          let trackState: VehicleTrackState;
+          const cx = v.centroid[0];
+          const cy = v.centroid[1];
           
-          if (newTracks.has(v.track_id)) {
-            trackState = newTracks.get(v.track_id)!;
-            trackState.kalmanState = kalman2DUpdate(trackState.kalmanState, centroid, 1/fps);
-            const pixelSpeed = getSpeedFromKalman2D(trackState.kalmanState);
-            trackState.computedSpeed = pixelSpeedToKmh(pixelSpeed, metersPerPixel);
-            trackState.centroidHistory.push(centroid);
-            if (trackState.centroidHistory.length > 30) trackState.centroidHistory.shift();
-          } else {
-            trackState = {
-              centroidHistory: [centroid],
-              kalmanState: initKalman2D(centroid),
-              currentPlane: v.plane_hint || 0,
-              computedSpeed: 0,
-              lastSpeedTime: frame.t,
-            };
+          // Get or create Kalman filter for this track
+          let kalman = vehicleKalmans.get(v.track_id);
+          if (!kalman) {
+            kalman = new PositionKalman(cx, cy, 0.5, 2, 1/fps);
+            vehicleKalmans.set(v.track_id, kalman);
           }
+          
+          // Update Kalman filter
+          kalman.predict();
+          kalman.update(cx, cy);
+          
+          // Get speed in km/h
+          const speedKmh = v.speed_kmh ?? kalman.getSpeedKmh(metersPerPixel);
+          
+          // Get or create track state
+          let trackState: VehicleTrackState = newTracks.get(v.track_id) || {
+            centroidHistory: [],
+            kalmanState: { x: cx, y: cy, vx: 0, vy: 0, P: 1 },
+            currentPlane: v.plane_hint || 0,
+            computedSpeed: 0,
+            lastSpeedTime: frame.t,
+          };
+          
+          // Update track state
+          const pos = kalman.getPosition();
+          const vel = kalman.getVelocity();
+          trackState.kalmanState = { x: pos.x, y: pos.y, vx: vel.vx, vy: vel.vy, P: 1 };
+          trackState.computedSpeed = speedKmh;
+          trackState.centroidHistory.push({ x: cx, y: cy });
+          if (trackState.centroidHistory.length > 30) trackState.centroidHistory.shift();
+          
           newTracks.set(v.track_id, trackState);
           
-          if (trackState.computedSpeed > speedThreshold) {
+          // Check speed threshold
+          if (speedKmh > speedThreshold) {
             const cooldown = vehicleState.alertCooldown.get(v.track_id);
             if (!cooldown || frame.t > cooldown) {
-              createAlert(1, { vehicle_id: v.track_id, speed: Math.round(trackState.computedSpeed * 10) / 10 });
+              createAlert(1, { vehicle_id: v.track_id, speed: Math.round(speedKmh * 10) / 10 });
               const newCooldown = new Map(vehicleState.alertCooldown);
               newCooldown.set(v.track_id, frame.t + 30);
               setVehicleState({ ...vehicleState, tracks: newTracks, alertCooldown: newCooldown });
@@ -110,8 +129,8 @@ export function useDetectionProcessor() {
       }
       case 'collision': {
         const humans = frame.detections.filter(d => d.cls === 'person');
-        const vehicles = frame.detections.filter(d => ['car', 'truck', 'bus', 'motorcycle'].includes(d.cls));
-        const distThreshold = mockData?.thresholds?.collision_distance || 100;
+        const vehicles = frame.detections.filter(d => ['car', 'truck', 'bus', 'motorcycle', 'forklift'].includes(d.cls));
+        const distThreshold = mockData?.thresholds?.collision_distance_px || mockData?.thresholds?.collision_distance || 100;
         
         for (const h of humans) {
           for (const v of vehicles) {
@@ -127,7 +146,7 @@ export function useDetectionProcessor() {
         break;
       }
       case 'ppe': {
-        const ppeDetections = frame.detections.filter(d => d.missing && d.missing.length >= 0);
+        const ppeDetections = frame.detections.filter(d => d.missing !== undefined);
         for (const det of ppeDetections) {
           const result = updatePPETrack(ppeState, det.track_id, det.missing || [], frame.t);
           setPPEState(result.state);
@@ -139,6 +158,11 @@ export function useDetectionProcessor() {
   }, [activeModule, mockData, intrusionState, throwingState, vehicleState, collisionState, ppeState,
       setIntrusionState, setThrowingState, setVehicleState, setCollisionState, setPPEState, createAlert]);
   
+  // Clear Kalman filters when module changes
+  useEffect(() => {
+    vehicleKalmans.clear();
+  }, [activeModule]);
+  
   useEffect(() => {
     if (!currentFrame) return;
     if (Math.abs(currentFrame.t - lastProcessedTime.current) < 0.01) return;
@@ -146,4 +170,3 @@ export function useDetectionProcessor() {
     processFrame(currentFrame);
   }, [currentFrame, processFrame]);
 }
-

@@ -1,31 +1,38 @@
 {
-  "camera_id": "cam02",
+  "camera_id": "cam_waste_area_01",
   "module": "throwing",
   "fps": 25,
+  "roi": [
+    {"x": 100, "y": 50},
+    {"x": 540, "y": 50},
+    {"x": 540, "y": 430},
+    {"x": 100, "y": 430}
+  ],
   "thresholds": {
     "smoothing_window": 3,
-    "consecutive_threshold": 10
+    "consecutive_threshold": 10,
+    "cooldown_seconds": 60
   },
   "frames": [
-    { "t": 0.0, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [260, 100, 380, 400] }] },
-    { "t": 0.5, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.91, "bbox": [260, 100, 380, 400] }] },
-    { "t": 1.0, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.93, "bbox": [260, 100, 380, 400] }] },
-    { "t": 1.5, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [260, 100, 380, 400] }] },
-    { "t": 2.0, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.91, "bbox": [260, 100, 380, 400] }] },
-    { "t": 2.5, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.88, "bbox": [255, 95, 385, 400] }] },
-    { "t": 2.6, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.89, "bbox": [255, 95, 385, 400] }] },
-    { "t": 2.7, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.90, "bbox": [255, 95, 385, 400] }] },
-    { "t": 2.8, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.89, "bbox": [255, 95, 385, 400] }] },
-    { "t": 2.9, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.91, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.0, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.90, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.1, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.89, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.2, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.90, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.3, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.91, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.4, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.90, "bbox": [255, 95, 385, 400] }] },
-    { "t": 3.5, "detections": [{ "track_id": 1, "cls": "throwing", "conf": 0.89, "bbox": [255, 95, 385, 400] }] },
-    { "t": 4.0, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [260, 100, 380, 400] }] },
-    { "t": 4.5, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.91, "bbox": [260, 100, 380, 400] }] },
-    { "t": 5.0, "detections": [{ "track_id": 1, "cls": "normal", "conf": 0.93, "bbox": [260, 100, 380, 400] }] }
+    {"t": 0.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [280, 120, 360, 380]}]},
+    {"t": 0.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.93, "bbox": [280, 120, 360, 380]}]},
+    {"t": 1.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.91, "bbox": [280, 120, 360, 380]}]},
+    {"t": 1.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.94, "bbox": [280, 120, 360, 380]}]},
+    {"t": 2.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [275, 115, 355, 375]}]},
+    {"t": 2.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.90, "bbox": [270, 110, 350, 370]}]},
+    {"t": 3.0, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.85, "bbox": [265, 100, 365, 365]}]},
+    {"t": 3.5, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.91, "bbox": [260, 95, 370, 360]}]},
+    {"t": 4.0, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.93, "bbox": [255, 90, 375, 355]}]},
+    {"t": 4.5, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.94, "bbox": [250, 85, 380, 350]}]},
+    {"t": 5.0, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.95, "bbox": [250, 85, 380, 350]}]},
+    {"t": 5.5, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.94, "bbox": [255, 90, 375, 355]}]},
+    {"t": 6.0, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.93, "bbox": [260, 95, 370, 360]}]},
+    {"t": 6.5, "detections": [{"track_id": 1, "cls": "throwing", "conf": 0.91, "bbox": [265, 100, 365, 365]}]},
+    {"t": 7.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.88, "bbox": [270, 110, 360, 370]}]},
+    {"t": 7.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [275, 115, 355, 375]}]},
+    {"t": 8.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.93, "bbox": [280, 120, 360, 380]}]},
+    {"t": 8.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.94, "bbox": [280, 120, 360, 380]}]},
+    {"t": 9.0, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.92, "bbox": [280, 120, 360, 380]}]},
+    {"t": 9.5, "detections": [{"track_id": 1, "cls": "normal", "conf": 0.93, "bbox": [280, 120, 360, 380]}]}
   ]
 }
-

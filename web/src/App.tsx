@@ -4,6 +4,7 @@ import { VideoPlayer } from './components/VideoPlayer';
 import { CanvasSimulator } from './components/CanvasSimulator';
 import { WhiteboxPanel } from './components/WhiteboxPanel';
 import { Timeline } from './components/Timeline';
+import { DocsPanel } from './components/DocsPanel';
 import { useAppStore } from './store/appStore';
 import { useDetectionProcessor } from './hooks/useDetectionProcessor';
 import { useSenderSimulator } from './hooks/useSenderSimulator';
@@ -38,6 +39,7 @@ function App() {
   
   const [videoSrc, setVideoSrc] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showDocs, setShowDocs] = useState(false);
   
   // Initialize processors
   useDetectionProcessor();
@@ -100,7 +102,9 @@ function App() {
   
   return (
     <div className="h-screen flex flex-col bg-argus-primary">
-      <Header />
+      <Header onDocsClick={() => setShowDocs(true)} />
+      
+      {showDocs && <DocsPanel onClose={() => setShowDocs(false)} />}
       
       <main className="flex-1 p-4 overflow-hidden">
         <div className="h-full flex gap-4">

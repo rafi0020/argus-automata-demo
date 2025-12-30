@@ -10,7 +10,11 @@ const modules: { id: ModuleType; label: string; icon: string }[] = [
   { id: 'ppe', label: 'PPE Compliance', icon: '🦺' },
 ];
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  onDocsClick: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onDocsClick }) => {
   const { viewMode, setViewMode, activeModule, setActiveModule, resetModuleStates, videoAvailable } = useAppStore();
   
   const handleModuleChange = (module: ModuleType) => {
@@ -50,22 +54,31 @@ export const Header: React.FC = () => {
           ))}
         </nav>
         
-        <div className="flex items-center gap-2 bg-argus-surface rounded-lg p-1">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-argus-surface rounded-lg p-1">
+            <button
+              onClick={() => setViewMode('explain')}
+              className={`px-4 py-1.5 rounded text-sm font-medium transition-colors ${
+                viewMode === 'explain' ? 'bg-argus-accent text-argus-primary' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              🔍 Explain
+            </button>
+            <button
+              onClick={() => setViewMode('operator')}
+              className={`px-4 py-1.5 rounded text-sm font-medium transition-colors ${
+                viewMode === 'operator' ? 'bg-argus-accent text-argus-primary' : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              👁️ Operator
+            </button>
+          </div>
+          
           <button
-            onClick={() => setViewMode('explain')}
-            className={`px-4 py-1.5 rounded text-sm font-medium transition-colors ${
-              viewMode === 'explain' ? 'bg-argus-accent text-argus-primary' : 'text-slate-400 hover:text-white'
-            }`}
+            onClick={onDocsClick}
+            className="px-4 py-1.5 rounded-lg text-sm font-medium bg-purple-600/20 text-purple-400 hover:bg-purple-600/30 border border-purple-500/30 transition-colors"
           >
-            🔍 Explain
-          </button>
-          <button
-            onClick={() => setViewMode('operator')}
-            className={`px-4 py-1.5 rounded text-sm font-medium transition-colors ${
-              viewMode === 'operator' ? 'bg-argus-accent text-argus-primary' : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            👁️ Operator
+            📚 Docs
           </button>
         </div>
       </div>

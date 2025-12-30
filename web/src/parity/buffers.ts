@@ -1,11 +1,159 @@
+/**
+ * Buffer and state management utilities for detection algorithms
+ * From parity layer - mirrors Python implementations
+ */
+
 import type {
-  IntrusionState, ThrowingState, ThrowingTrackState,
-  CollisionState, CollisionPairState, PPEState, PPETrackState,
+  IntrusionState, ThrowingState,
+  CollisionState, PPEState,
 } from '../types';
 
-// Intrusion
+/**
+ * Circular buffer for persistence checking.
+ * Mirrors Python's collections.deque with maxlen.
+ */
+export class PersistenceBuffer {
+  private buffer: boolean[];
+  private maxSize: number;
+  private index: number = 0;
+  private filled: boolean = false;
+
+  constructor(size: number) {
+    this.maxSize = size;
+    this.buffer = new Array(size).fill(false);
+  }
+
+  push(value: boolean): void {
+    this.buffer[this.index] = value;
+    this.index = (this.index + 1) % this.maxSize;
+    if (this.index === 0) this.filled = true;
+  }
+
+  count(): number {
+    const length = this.filled ? this.maxSize : this.index;
+    let count = 0;
+    for (let i = 0; i < length; i++) {
+      if (this.buffer[i]) count++;
+    }
+    return count;
+  }
+
+  isFull(): boolean {
+    return this.filled;
+  }
+
+  getBuffer(): boolean[] {
+    if (this.filled) {
+      return [...this.buffer.slice(this.index), ...this.buffer.slice(0, this.index)];
+    }
+    return this.buffer.slice(0, this.index);
+  }
+
+  reset(): void {
+    this.buffer.fill(false);
+    this.index = 0;
+    this.filled = false;
+  }
+
+  size(): number {
+    return this.filled ? this.maxSize : this.index;
+  }
+}
+
+/**
+ * Cooldown tracker for preventing alert spam.
+ */
+export class CooldownTracker {
+  private cooldowns: Map<string, number> = new Map();
+
+  isOnCooldown(key: string, currentTime: number): boolean {
+    const expiry = this.cooldowns.get(key);
+    if (expiry === undefined) return false;
+    return currentTime < expiry;
+  }
+
+  setCooldown(key: string, currentTime: number, duration: number): void {
+    this.cooldowns.set(key, currentTime + duration);
+  }
+
+  clearExpired(currentTime: number): void {
+    for (const [key, expiry] of this.cooldowns) {
+      if (currentTime >= expiry) {
+        this.cooldowns.delete(key);
+      }
+    }
+  }
+
+  getRemainingTime(key: string, currentTime: number): number {
+    const expiry = this.cooldowns.get(key);
+    if (expiry === undefined) return 0;
+    return Math.max(0, expiry - currentTime);
+  }
+
+  reset(): void {
+    this.cooldowns.clear();
+  }
+}
+
+/**
+ * Class smoothing buffer for filtering noisy classifications.
+ */
+export class ClassSmoothingBuffer {
+  private buffer: string[];
+  private maxSize: number;
+  private index: number = 0;
+  private filled: boolean = false;
+
+  constructor(size: number) {
+    this.maxSize = size;
+    this.buffer = new Array(size).fill('');
+  }
+
+  push(cls: string): void {
+    this.buffer[this.index] = cls;
+    this.index = (this.index + 1) % this.maxSize;
+    if (this.index === 0) this.filled = true;
+  }
+
+  getMajorityClass(): string {
+    const counts = new Map<string, number>();
+    const length = this.filled ? this.maxSize : this.index;
+
+    for (let i = 0; i < length; i++) {
+      const cls = this.buffer[i];
+      if (cls) {
+        counts.set(cls, (counts.get(cls) || 0) + 1);
+      }
+    }
+
+    let maxCount = 0;
+    let majorityClass = '';
+    for (const [cls, count] of counts) {
+      if (count > maxCount) {
+        maxCount = count;
+        majorityClass = cls;
+      }
+    }
+
+    return majorityClass;
+  }
+
+  reset(): void {
+    this.buffer.fill('');
+    this.index = 0;
+    this.filled = false;
+  }
+}
+
+// State initializers
 export function initIntrusionState(bufferSize = 5, threshold = 3): IntrusionState {
-  return { buffer: [], currentState: 0, lastStateChangeTime: null, bufferSize, threshold };
+  return { 
+    buffer: [], 
+    currentState: 0, 
+    lastStateChangeTime: null, 
+    bufferSize, 
+    threshold,
+  };
 }
 
 export function updateIntrusionBuffer(
@@ -26,8 +174,14 @@ export function updateIntrusionBuffer(
   }
   
   return {
-    state: { ...state, buffer: newBuffer, currentState: newState, lastStateChangeTime: emitAlert ? timestamp : state.lastStateChangeTime },
-    emitAlert, alertType,
+    state: { 
+      ...state, 
+      buffer: newBuffer, 
+      currentState: newState, 
+      lastStateChangeTime: emitAlert ? timestamp : state.lastStateChangeTime 
+    },
+    emitAlert, 
+    alertType,
   };
 }
 
@@ -116,4 +270,3 @@ export function updatePPETrack(
   newTracks.set(trackId, trackState);
   return { state: { ...state, tracks: newTracks }, triggerAlert, violations: trackState.lastViolations };
 }
-

@@ -1,27 +1,41 @@
 {
-  "camera_id": "cam03",
+  "camera_id": "cam_road_01",
   "module": "vehicle",
   "fps": 25,
-  "homography_matrices": [[[0.05, 0, 0], [0, 0.05, 0], [0, 0, 1]]],
+  "roi": [
+    {"x": 50, "y": 200},
+    {"x": 590, "y": 200},
+    {"x": 590, "y": 420},
+    {"x": 50, "y": 420}
+  ],
   "thresholds": {
-    "speed_threshold": 30,
+    "speed_threshold_kmh": 30,
     "meters_per_pixel": 0.05,
-    "alert_cooldown": 30
+    "alert_cooldown_seconds": 30
   },
+  "homography_matrices": [
+    [[0.05, 0, 0], [0, 0.05, 0], [0, 0, 1]]
+  ],
   "frames": [
-    { "t": 0.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [40, 260, 120, 340], "centroid": [80, 300], "plane_hint": 0 }] },
-    { "t": 0.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [60, 260, 140, 340], "centroid": [100, 300], "plane_hint": 0 }] },
-    { "t": 0.4, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [80, 260, 160, 340], "centroid": [120, 300], "plane_hint": 0 }] },
-    { "t": 0.6, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [100, 260, 180, 340], "centroid": [140, 300], "plane_hint": 0 }] },
-    { "t": 0.8, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [120, 260, 200, 340], "centroid": [160, 300], "plane_hint": 0 }] },
-    { "t": 1.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [150, 260, 230, 340], "centroid": [190, 300], "plane_hint": 0 }] },
-    { "t": 1.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [190, 260, 270, 340], "centroid": [230, 300], "plane_hint": 0 }] },
-    { "t": 1.4, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [240, 260, 320, 340], "centroid": [280, 300], "plane_hint": 0 }] },
-    { "t": 1.6, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [300, 260, 380, 340], "centroid": [340, 300], "plane_hint": 0 }] },
-    { "t": 1.8, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [370, 260, 450, 340], "centroid": [410, 300], "plane_hint": 0 }] },
-    { "t": 2.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [440, 260, 520, 340], "centroid": [480, 300], "plane_hint": 0 }] },
-    { "t": 2.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [500, 260, 580, 340], "centroid": [540, 300], "plane_hint": 0 }] },
-    { "t": 2.5, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [540, 260, 620, 340], "centroid": [580, 300], "plane_hint": 0 }] }
+    {"t": 0.0, "detections": [{"track_id": 1, "cls": "car", "conf": 0.96, "bbox": [50, 280, 130, 340], "centroid": [90, 310], "speed_kmh": 25, "plane_hint": 0}]},
+    {"t": 0.5, "detections": [{"track_id": 1, "cls": "car", "conf": 0.95, "bbox": [90, 280, 170, 340], "centroid": [130, 310], "speed_kmh": 28, "plane_hint": 0}]},
+    {"t": 1.0, "detections": [{"track_id": 1, "cls": "car", "conf": 0.96, "bbox": [140, 280, 220, 340], "centroid": [180, 310], "speed_kmh": 32, "plane_hint": 0}]},
+    {"t": 1.5, "detections": [{"track_id": 1, "cls": "car", "conf": 0.94, "bbox": [200, 280, 280, 340], "centroid": [240, 310], "speed_kmh": 38, "plane_hint": 0}]},
+    {"t": 2.0, "detections": [{"track_id": 1, "cls": "car", "conf": 0.95, "bbox": [270, 280, 350, 340], "centroid": [310, 310], "speed_kmh": 45, "plane_hint": 0}]},
+    {"t": 2.5, "detections": [{"track_id": 1, "cls": "car", "conf": 0.96, "bbox": [350, 280, 430, 340], "centroid": [390, 310], "speed_kmh": 52, "plane_hint": 0}]},
+    {"t": 3.0, "detections": [{"track_id": 1, "cls": "car", "conf": 0.95, "bbox": [440, 280, 520, 340], "centroid": [480, 310], "speed_kmh": 48, "plane_hint": 0}]},
+    {"t": 3.5, "detections": [{"track_id": 1, "cls": "car", "conf": 0.94, "bbox": [520, 280, 600, 340], "centroid": [560, 310], "speed_kmh": 42, "plane_hint": 0}]},
+    {"t": 4.0, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.93, "bbox": [50, 320, 150, 400], "centroid": [100, 360], "speed_kmh": 22, "plane_hint": 0}]},
+    {"t": 4.5, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.94, "bbox": [100, 320, 200, 400], "centroid": [150, 360], "speed_kmh": 25, "plane_hint": 0}]},
+    {"t": 5.0, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.95, "bbox": [160, 320, 260, 400], "centroid": [210, 360], "speed_kmh": 28, "plane_hint": 0}]},
+    {"t": 5.5, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.94, "bbox": [230, 320, 330, 400], "centroid": [280, 360], "speed_kmh": 26, "plane_hint": 0}]},
+    {"t": 6.0, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.93, "bbox": [300, 320, 400, 400], "centroid": [350, 360], "speed_kmh": 24, "plane_hint": 0}]},
+    {"t": 6.5, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.94, "bbox": [370, 320, 470, 400], "centroid": [420, 360], "speed_kmh": 23, "plane_hint": 0}]},
+    {"t": 7.0, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.95, "bbox": [440, 320, 540, 400], "centroid": [490, 360], "speed_kmh": 22, "plane_hint": 0}]},
+    {"t": 7.5, "detections": [{"track_id": 2, "cls": "truck", "conf": 0.94, "bbox": [510, 320, 610, 400], "centroid": [560, 360], "speed_kmh": 21, "plane_hint": 0}]},
+    {"t": 8.0, "detections": []},
+    {"t": 8.5, "detections": []},
+    {"t": 9.0, "detections": []},
+    {"t": 9.5, "detections": []}
   ]
 }
-
