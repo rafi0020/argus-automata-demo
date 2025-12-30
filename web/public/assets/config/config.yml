@@ -1,0 +1,93 @@
+# Argus Automata Camera Configuration
+# This file demonstrates the expected config format for the real system
+
+cameras:
+  - id: cam_entrance_01
+    name: "Main Entrance Camera"
+    stream_url: "rtsp://example.com/cam01"
+    fps: 25
+    resolution: [640, 480]
+    modules:
+      intrusion:
+        enabled: true
+        roi:
+          - [120, 100]
+          - [520, 100]
+          - [520, 380]
+          - [120, 380]
+        buffer_size: 5
+        threshold: 3
+        cooldown_seconds: 30
+
+  - id: cam_waste_area_01
+    name: "Waste Disposal Area"
+    stream_url: "rtsp://example.com/cam02"
+    fps: 25
+    resolution: [640, 480]
+    modules:
+      throwing:
+        enabled: true
+        smoothing_window: 3
+        consecutive_threshold: 10
+        cooldown_seconds: 60
+
+  - id: cam_road_01
+    name: "Internal Road Camera"
+    stream_url: "rtsp://example.com/cam03"
+    fps: 25
+    resolution: [640, 480]
+    modules:
+      vehicle:
+        enabled: true
+        speed_threshold_kmh: 30
+        meters_per_pixel: 0.05
+        homography_matrix:
+          - [0.05, 0, 0]
+          - [0, 0.05, 0]
+          - [0, 0, 1]
+        alert_cooldown_seconds: 30
+
+  - id: cam_warehouse_01
+    name: "Warehouse Floor"
+    stream_url: "rtsp://example.com/cam04"
+    fps: 25
+    resolution: [640, 480]
+    modules:
+      collision:
+        enabled: true
+        collision_distance_px: 100
+        collision_buffer_frames: 5
+        collision_cooldown_seconds: 30
+
+  - id: cam_factory_floor_01
+    name: "Factory Production Line"
+    stream_url: "rtsp://example.com/cam05"
+    fps: 25
+    resolution: [640, 480]
+    modules:
+      ppe:
+        enabled: true
+        required_items:
+          - helmet
+          - vest
+          - gloves
+        ppe_persistence_frames: 15
+        ppe_cooldown_seconds: 60
+
+# Alert Configuration
+alerts:
+  database: "alerts.db"
+  sender:
+    api_url: "https://api.example.com/alerts"
+    batch_size: 10
+    send_interval_seconds: 5
+    retry_attempts: 3
+    purge_after_seconds: 3600
+
+# Logging Configuration
+logging:
+  level: INFO
+  file: "logs/argus.log"
+  max_size_mb: 100
+  backup_count: 5
+

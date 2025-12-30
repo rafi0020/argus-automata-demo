@@ -1,0 +1,39 @@
+{
+  "camera_id": "cam_entrance_01",
+  "module": "intrusion",
+  "fps": 25,
+  "roi": [
+    {"x": 120, "y": 100},
+    {"x": 520, "y": 100},
+    {"x": 520, "y": 380},
+    {"x": 120, "y": 380}
+  ],
+  "thresholds": {
+    "buffer_size": 5,
+    "threshold": 3,
+    "cooldown_seconds": 30
+  },
+  "frames": [
+    {"t": 0.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.94, "bbox": [50, 180, 100, 350], "bottom_center": [75, 350]}]},
+    {"t": 0.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [70, 180, 120, 350], "bottom_center": [95, 350]}]},
+    {"t": 1.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.93, "bbox": [90, 180, 140, 350], "bottom_center": [115, 350]}]},
+    {"t": 1.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.96, "bbox": [115, 180, 165, 350], "bottom_center": [140, 350]}]},
+    {"t": 2.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [140, 180, 190, 350], "bottom_center": [165, 350]}]},
+    {"t": 2.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.94, "bbox": [170, 180, 220, 350], "bottom_center": [195, 350]}]},
+    {"t": 3.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [200, 180, 250, 350], "bottom_center": [225, 350]}]},
+    {"t": 3.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.96, "bbox": [230, 180, 280, 350], "bottom_center": [255, 350]}]},
+    {"t": 4.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.94, "bbox": [260, 180, 310, 350], "bottom_center": [285, 350]}]},
+    {"t": 4.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [290, 180, 340, 350], "bottom_center": [315, 350]}]},
+    {"t": 5.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.96, "bbox": [320, 180, 370, 350], "bottom_center": [345, 350]}]},
+    {"t": 5.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [350, 180, 400, 350], "bottom_center": [375, 350]}]},
+    {"t": 6.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.94, "bbox": [380, 180, 430, 350], "bottom_center": [405, 350]}]},
+    {"t": 6.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [410, 180, 460, 350], "bottom_center": [435, 350]}]},
+    {"t": 7.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.96, "bbox": [440, 180, 490, 350], "bottom_center": [465, 350]}]},
+    {"t": 7.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [470, 180, 520, 350], "bottom_center": [495, 350]}]},
+    {"t": 8.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.94, "bbox": [500, 180, 550, 350], "bottom_center": [525, 350]}]},
+    {"t": 8.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [530, 180, 580, 350], "bottom_center": [555, 350]}]},
+    {"t": 9.0, "detections": [{"track_id": 1, "cls": "person", "conf": 0.96, "bbox": [550, 180, 600, 350], "bottom_center": [575, 350]}]},
+    {"t": 9.5, "detections": [{"track_id": 1, "cls": "person", "conf": 0.95, "bbox": [560, 180, 610, 350], "bottom_center": [585, 350]}]}
+  ]
+}
+
