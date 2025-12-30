@@ -1,0 +1,27 @@
+{
+  "camera_id": "cam03",
+  "module": "vehicle",
+  "fps": 25,
+  "homography_matrices": [[[0.05, 0, 0], [0, 0.05, 0], [0, 0, 1]]],
+  "thresholds": {
+    "speed_threshold": 30,
+    "meters_per_pixel": 0.05,
+    "alert_cooldown": 30
+  },
+  "frames": [
+    { "t": 0.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [40, 260, 120, 340], "centroid": [80, 300], "plane_hint": 0 }] },
+    { "t": 0.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [60, 260, 140, 340], "centroid": [100, 300], "plane_hint": 0 }] },
+    { "t": 0.4, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [80, 260, 160, 340], "centroid": [120, 300], "plane_hint": 0 }] },
+    { "t": 0.6, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [100, 260, 180, 340], "centroid": [140, 300], "plane_hint": 0 }] },
+    { "t": 0.8, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [120, 260, 200, 340], "centroid": [160, 300], "plane_hint": 0 }] },
+    { "t": 1.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [150, 260, 230, 340], "centroid": [190, 300], "plane_hint": 0 }] },
+    { "t": 1.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [190, 260, 270, 340], "centroid": [230, 300], "plane_hint": 0 }] },
+    { "t": 1.4, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [240, 260, 320, 340], "centroid": [280, 300], "plane_hint": 0 }] },
+    { "t": 1.6, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [300, 260, 380, 340], "centroid": [340, 300], "plane_hint": 0 }] },
+    { "t": 1.8, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [370, 260, 450, 340], "centroid": [410, 300], "plane_hint": 0 }] },
+    { "t": 2.0, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.92, "bbox": [440, 260, 520, 340], "centroid": [480, 300], "plane_hint": 0 }] },
+    { "t": 2.2, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.94, "bbox": [500, 260, 580, 340], "centroid": [540, 300], "plane_hint": 0 }] },
+    { "t": 2.5, "detections": [{ "track_id": 1, "cls": "car", "conf": 0.93, "bbox": [540, 260, 620, 340], "centroid": [580, 300], "plane_hint": 0 }] }
+  ]
+}
+

@@ -1,0 +1,53 @@
+{
+  "camera_id": "cam04",
+  "module": "collision",
+  "fps": 25,
+  "thresholds": {
+    "collision_distance": 100,
+    "collision_buffer": 5,
+    "collision_cooldown": 30
+  },
+  "frames": [
+    { "t": 0.0, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [180, 200, 240, 400], "bottom_center": [210, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.92, "bbox": [420, 270, 520, 350], "centroid": [470, 310] }
+    ]},
+    { "t": 0.5, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [185, 200, 245, 400], "bottom_center": [215, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.93, "bbox": [390, 270, 490, 350], "centroid": [440, 310] }
+    ]},
+    { "t": 1.0, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [190, 200, 250, 400], "bottom_center": [220, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.92, "bbox": [360, 270, 460, 350], "centroid": [410, 310] }
+    ]},
+    { "t": 1.5, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [195, 200, 255, 400], "bottom_center": [225, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.93, "bbox": [330, 270, 430, 350], "centroid": [380, 310] }
+    ]},
+    { "t": 2.0, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [200, 200, 260, 400], "bottom_center": [230, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.92, "bbox": [300, 270, 400, 350], "centroid": [350, 310] }
+    ]},
+    { "t": 2.5, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [205, 200, 265, 400], "bottom_center": [235, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.93, "bbox": [270, 270, 370, 350], "centroid": [320, 310] }
+    ]},
+    { "t": 3.0, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [210, 200, 270, 400], "bottom_center": [240, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.92, "bbox": [250, 270, 350, 350], "centroid": [300, 310] }
+    ]},
+    { "t": 3.5, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [215, 200, 275, 400], "bottom_center": [245, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.93, "bbox": [280, 270, 380, 350], "centroid": [330, 310] }
+    ]},
+    { "t": 4.0, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [220, 200, 280, 400], "bottom_center": [250, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.92, "bbox": [310, 270, 410, 350], "centroid": [360, 310] }
+    ]},
+    { "t": 4.5, "detections": [
+      { "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [225, 200, 285, 400], "bottom_center": [255, 400] },
+      { "track_id": 2, "cls": "car", "conf": 0.93, "bbox": [350, 270, 450, 350], "centroid": [400, 310] }
+    ]}
+  ]
+}
+

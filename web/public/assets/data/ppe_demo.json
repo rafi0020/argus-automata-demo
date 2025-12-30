@@ -1,0 +1,41 @@
+{
+  "camera_id": "cam05",
+  "module": "ppe",
+  "fps": 25,
+  "roi": [
+    { "x": 50, "y": 50 },
+    { "x": 590, "y": 50 },
+    { "x": 590, "y": 430 },
+    { "x": 50, "y": 430 }
+  ],
+  "thresholds": {
+    "ppe_persistence": 15,
+    "ppe_cooldown": 60
+  },
+  "frames": [
+    { "t": 0.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [260, 80, 380, 420], "missing": [] }] },
+    { "t": 0.5, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [262, 80, 382, 420], "missing": [] }] },
+    { "t": 1.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [264, 80, 384, 420], "missing": [] }] },
+    { "t": 1.5, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [266, 80, 386, 420], "missing": ["helmet"] }] },
+    { "t": 2.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.1, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.2, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.3, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.4, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.5, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.6, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.7, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.8, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 2.9, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.1, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.2, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.3, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.4, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 3.5, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [268, 80, 388, 420], "missing": ["helmet", "vest"] }] },
+    { "t": 4.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [270, 80, 390, 420], "missing": ["helmet"] }] },
+    { "t": 4.5, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.94, "bbox": [272, 80, 392, 420], "missing": [] }] },
+    { "t": 5.0, "detections": [{ "track_id": 1, "cls": "person", "conf": 0.95, "bbox": [274, 80, 394, 420], "missing": [] }] }
+  ]
+}
+
