@@ -11,7 +11,7 @@
 
 ## 🎯 Live Demo
 
-**[View Live Demo](https://YOUR_USERNAME.github.io/argus-automata-demo/)**
+**[View Live Demo]((https://rafi0020.github.io/argus-automata-demo/))**
 
 ## 📋 Overview
 
